@@ -4,7 +4,7 @@
 #  @version   1.1
 #  @author    Milan Koren
 #  @copyright EUPL v1.2, https://eupl.eu/
-#  @remark    github.com/
+#  @remark    https://github.com/milan-koren/GenSimPlot
 
 import math
 import random
