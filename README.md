@@ -6,13 +6,13 @@ GenSimPlot is a Python script collection designed for QGIS, aimed at generating 
 
 # Instructions for Using GenSimPlot Script Library
 
-## Environment Setup:
+## Environment Setup
 1. Open QGIS Desktop v. 3.30.1 or later.
 2. Open the Python console from the toolbar or use Ctrl+Alt+P.
 3. Use the "Show Editor" button to open the script editor.
 4. Open "gensimplot.py" in the script editor.
 
-## Modify the Script:
+## Modify the Script
 Modify the script to automate the generation of your simulation plots.
 
 ```Python
