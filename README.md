@@ -15,7 +15,7 @@ GenSimPlot is a Python script collection designed for QGIS, aimed at generating 
 ## Modify the Script:
 Modify the script to automate the generation of your simulation plots.
 
-'''Python
+```Python
 # Setup Working Environment
 workingDir = "C:\\simulation\\"
 fstandShapeFile = "fstand.shp"
@@ -40,3 +40,4 @@ points.valueFromPoints(workingDir + "simplot.shp", simplotIDField, "slopemin", "
 points.valueFromCentroid(workingDir + "simplot.shp", "temperature", workingDir + "mtemper")
 
 # Assign Other Required Environmental Variables to Simulation Plots (e.g., aspect, precipitation, solar radiation)
+```
