@@ -26,7 +26,7 @@ simplotIDField = "fstand_id"
 rplots = gensimplot.RectangularSimulationPlot()
 rplots.generatePlotsByPositionAndShape(workingDir + fstandShapeFile, fstandIDField, workingDir + "simplot.shp", simplotIDField)
 
-# Create Points and Extract DEM for Simulation Plots (elevation stored in raster "dem")
+# Create and Extract DEM Points for Simulation Plots (elevation stored in the raster "dem")
 points = gensimplot.SimulationPlotVariables()
 points.generatePoints(workingDir + "simplot.shp", simplotIDField, workingDir + "simplot_points.shp", simplotIDField, 5)
 points.demPoints(workingDir + "simplot.shp", simplotIDField, workingDir + "simplot_points.shp", simplotIDField, workingDir + "dem")
