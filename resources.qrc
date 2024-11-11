@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/plugins/GenSimPlot" >
+      <file>icon.png</file>
+      <file>icon01.png</file>
+      <file>icon02.png</file>
+      <file>icon03.png</file>
+      <file>icon04.png</file>
+    </qresource>
+</RCC>
