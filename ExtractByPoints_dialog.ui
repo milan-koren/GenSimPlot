@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+  <class>Dialog</class>
+  <widget class="QDialog" name="Dialog">
+    <property name="geometry">
+      <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>600</width>
+        <height>250</height>
+      </rect>
+    </property>
+    <property name="minimumSize">
+      <size>
+        <width>600</width>
+        <height>250</height>
+      </size>
+    </property>
+    <property name="windowTitle">
+      <string>Raster Value Statistics by Plot Points</string>
+    </property>
+
+    <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+        <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>580</width>
+          <height>190</height>
+        </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+
+        <item row="0" column="0">
+          <widget class="QLabel" name="label">
+            <property name="text">
+              <string>Simulation plots</string>
+            </property>
+          </widget>
+        </item>
+        <item row="0" column="1">
+          <widget class="QLineEdit" name="tbInputPlotsShpFN"/>
+        </item>
+        <item row="0" column="2">
+          <widget class="QPushButton" name="btnBrowseInputPlotShp">
+            <property name="text">
+              <string>Browse</string>
+            </property>
+          </widget>
+        </item>
+
+        <item row="1" column="0">
+          <widget class="QLabel" name="label_6">
+            <property name="text">
+              <string>Plot ID</string>
+            </property>
+          </widget>
+        </item>
+        <item row="1" column="1">
+          <widget class="QComboBox" name="cmbFields"/>
+        </item>
+
+        <item row="2" column="0">
+          <widget class="QLabel" name="label">
+            <property name="text">
+              <string>Simulation plot points</string>
+            </property>
+          </widget>
+        </item>
+        <item row="2" column="1">
+          <widget class="QLineEdit" name="tbInputPointsShpFN"/>
+        </item>
+        <item row="2" column="2">
+          <widget class="QPushButton" name="btnBrowseInputPointsShp">
+            <property name="text">
+              <string>Browse</string>
+            </property>
+          </widget>
+        </item>
+        
+        <item row="3" column="0">
+          <widget class="QLabel" name="label_6">
+            <property name="text">
+              <string>Output field name</string>
+            </property>
+          </widget>
+        </item>
+        <item row="3" column="1">
+          <widget class="QLineEdit" name="tbOutputFieldName"/>
+        </item>
+        
+        <item row="4" column="0">
+          <widget class="QLabel" name="label_2">
+            <property name="text">
+              <string>Raster</string>
+            </property>
+          </widget>
+        </item>
+        <item row="4" column="1">
+          <widget class="QLineEdit" name="tbInputRasterFN"/>
+        </item>
+        <item row="4" column="2">
+          <widget class="QPushButton" name="btnBrowseInputRaster">
+            <property name="text">
+              <string>Browse</string>
+            </property>
+          </widget>
+        </item>
+
+      </layout>
+    </widget>
+
+    <widget class="QDialogButtonBox" name="btnBox">
+      <property name="geometry">
+        <rect>
+          <x>10</x>
+          <y>210</y>
+          <width>580</width>
+          <height>30</height>
+        </rect>
+      </property>
+      <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      </property>
+      <property name="centerButtons">
+        <bool>true</bool>
+      </property>
+    </widget>
+
+  </widget>
+
+  <resources/>
+  <connections>
+    <connection>
+      <sender>btnBox</sender>
+      <signal>accepted()</signal>
+      <receiver>Dialog</receiver>
+      <slot>accept()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>248</x>
+          <y>254</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>157</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+    <connection>
+      <sender>btnBox</sender>
+      <signal>rejected()</signal>
+      <receiver>Dialog</receiver>
+      <slot>reject()</slot>
+      <hints>
+        <hint type="sourcelabel">
+          <x>316</x>
+          <y>260</y>
+        </hint>
+        <hint type="destinationlabel">
+          <x>286</x>
+          <y>274</y>
+        </hint>
+      </hints>
+    </connection>
+  </connections>
+</ui>
