@@ -1,0 +1,47 @@
+# This file contains metadata for your plugin.
+
+# This file should be included when you package your plugin.# Mandatory items:
+
+[general]
+name=GenSimPlot
+qgisMinimumVersion=3.30
+description=Generator of simulation plots
+version=2.1
+author=Milan Koren
+email=milan.koren@tuzvo.sk
+
+about=GenSimPlot is a Python library and QGIS plugin that generates spatially optimized square, circular, rectangular, and elliptical plots for simulating and analyzing geographical processes. The plugin maximizes plot overlap with source polygons, supports regular grid point generation within plots, and enables extraction and assignment of environmental raster data to both simulation plots and points.
+
+tracker=https://github.com/milan-koren/GenSimPlot
+repository=https://github.com/milan-koren/GenSimPlot
+# End of mandatory metadata
+
+# Recommended items:
+
+hasProcessingProvider=no
+# Uncomment the following line and add your changelog:
+# changelog=
+
+# Tags are comma separated with spaces allowed
+tags=python, vector, raster, simulation, plot, generator
+
+homepage=https://github.com/milan-koren/GenSimPlot
+category=Plugins
+icon=icon.png
+# experimental flag
+experimental=False
+
+# deprecated flag (applies to the whole plugin, not just a single version)
+deprecated=False
+
+# Since QGIS 3.8, a comma separated list of plugins to be installed
+# (or upgraded) can be specified.
+# Check the documentation for more information.
+# plugin_dependencies=
+
+Category of the plugin: Raster, Vector, Database or Web
+#category=Vector
+
+# If the plugin can run on QGIS Server.
+server=False
+
