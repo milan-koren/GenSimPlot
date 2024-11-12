@@ -212,46 +212,43 @@
         The <b><i>GenSimPlot</i></b> library provides classes and functions for automating the generation of simulation plots, creation of point grids, and extraction of raster values.<br />
         These tools can be executed from the QGIS Python console or integrated into custom Python workflows for streamlined spatial analysis.
     </p>
-    <p>Example usage of <b><i><code>GenSimPlotLib</code></i></b> classes:</p>
-    <pre>
-        <code>
-            
-            from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
-            from GenSimPlotUtilities import GProgressDialog
+    <p>Example usage of <b><i>GenSimPlotLib</i></b> classes:</p>
+<pre>
+from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
+from GenSimPlotUtilities import GProgressDialog
 
-            # Initialize the progress dialog
-            progressDlg = GProgressDialog()
-            progressDlg.show()
+#Initialize the progress dialog
+progressDlg = GProgressDialog()
+progressDlg.show()
 
-            # Define input parameters
-            workingFolder = "c:\\data\\"
-            inputShp = workingFolder + "forest_stands.shp"
-            polygonID = "id"
-            plotsShp = workingFolder + "plots.shp"
-            pointsShp = workingFolder + "points.shp"
-            nPoints = 10
-            clipPoints = True
-            demRaster = workingFolder + "dem\\dem"
-            slopeRaster = workingFolder + "dem\\slope"
+#Define input parameters
+workingFolder = "c:\\data\\"
+inputShp = workingFolder + "forest_stands.shp"
+polygonID = "id"
+plotsShp = workingFolder + "plots.shp"
+pointsShp = workingFolder + "points.shp"
+nPoints = 10
+clipPoints = True
+demRaster = workingFolder + "dem\\dem"
+slopeRaster = workingFolder + "dem\\slope"
 
-            # Generate optimized simulation plots
-            plotGen = PlotGenerator()
-            plotGen.generateBestPlots(inputShp, polygonID, plotsShp, progressDlg)
+#Generate optimized simulation plots
+plotGen = PlotGenerator()
+plotGen.generateBestPlots(inputShp, polygonID, plotsShp, progressDlg)
 
-            # Generate a grid of points within the plots
-            pointsGen = SimulationPlotVariables()
-            pointsGen.generatePoints(plotsShp, polygonID, pointsShp, nPoints, clipPoints, progressDlg)
+#Generate a grid of points within the plots
+pointsGen = SimulationPlotVariables()
+pointsGen.generatePoints(plotsShp, polygonID, pointsShp, nPoints, clipPoints, progressDlg)
 
-            # Extract raster values for each point within plots and calculate plot-level statistics
-            rasterStats = SimulationPlotVariables()
-            rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, "elev", demRaster, progressDlg)
+#Extract raster values for each point within plots and calculate plot-level statistics
+rasterStats = SimulationPlotVariables()
+rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, "elev", demRaster, progressDlg)
 
-            # Extract raster values for each plot centroid
-            rasterCentroid = SimulationPlotVariables()
-            rasterCentroid.valueFromCentroid(plotsShp, "slope", slopeRaster, progressDlg)
+#Extract raster values for each plot centroid
+rasterCentroid = SimulationPlotVariables()
+rasterCentroid.valueFromCentroid(plotsShp, "slope", slopeRaster, progressDlg)
 
-            # Close the progress dialog
-            progressDlg.close()
-        </code>
-    </pre>
+#Close the progress dialog
+progressDlg.close()
+</pre>
 </div>
