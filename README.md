@@ -1,8 +1,8 @@
 <div>
-    <img src="help/gensimplot.png" width="64" height="64" style="float: left; margin-right: 10px; vertical-align: bottom;" />
-    <h1 style="display: inline-block; vertical-align: bottom;">GenSimPlot</h1>
+    <img src="help/gensimplot.png" width="64" height="64" margin-right: 10px;" />
+    <h1>GenSimPlot</h1>
 </div>
-<div style="clear: both;">
+<div>
     <p>
         <b>GenSimPlot</b> is a QGIS plugin designed and developed for generating spatially optimized plots used in the simulation and analysis of geographic processes.
         Plugin enable to create squared, circular, rectangular, and eliptical plots maximazing overlap with the source polygons, enhancing the accuracy and representativeness of simulations.
