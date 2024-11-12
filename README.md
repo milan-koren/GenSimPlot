@@ -215,6 +215,7 @@
     <p>Example usage of <b><i><code>GenSimPlotLib</code></i></b> classes:</p>
     <pre>
         <code>
+            
             from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
             from GenSimPlotUtilities import GProgressDialog
 
@@ -243,14 +244,14 @@
 
             # Extract raster values for each point within plots and calculate plot-level statistics
             rasterStats = SimulationPlotVariables()
-            rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, 'elev', demRaster, progressDlg)
+            rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, "elev", demRaster, progressDlg)
 
             # Extract raster values for each plot centroid
             rasterCentroid = SimulationPlotVariables()
-            rasterCentroid.valueFromCentroid(plotsShp, 'slope', slopeRaster, progressDlg)
+            rasterCentroid.valueFromCentroid(plotsShp, "slope", slopeRaster, progressDlg)
 
             # Close the progress dialog
             progressDlg.close()
         </code>
-</pre>
+    </pre>
 </div>
