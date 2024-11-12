@@ -43,12 +43,14 @@ class GProgressDialog:
         self.progress.setAutoReset(False)
         QApplication.processEvents()
 
+
     def show(self):
         """
         Displays the progress dialog.
         """
         self.progress.show()
         QApplication.processEvents()
+
 
     def restart(self, label: str, maximum: int):
         """
@@ -63,6 +65,7 @@ class GProgressDialog:
         self.progress.setValue(0)
         QApplication.processEvents()
 
+
     def setLabel(self, label: str):
         """
         Sets the label of the progress dialog.
@@ -72,6 +75,7 @@ class GProgressDialog:
         """
         self.progress.setLabelText(label)
         QApplication.processEvents()
+
 
     def setMaximum(self, maximum: int):
         """
@@ -83,6 +87,7 @@ class GProgressDialog:
         self.progress.setMaximum(maximum)
         self.progress.setValue(0)
         QApplication.process
+
 
     def setProgress(self, val: int):
         """
@@ -96,6 +101,7 @@ class GProgressDialog:
         if self.progress.wasCanceled():
             raise Exception("User cancelled operation.")
 
+
     def increment(self):
         """
         Increments the value of the progress bar by 1.
@@ -108,11 +114,13 @@ class GProgressDialog:
         if self.progress.wasCanceled():
             raise Exception("User cancelled operation.")
 
+
     def wasCanceled(self):
         """
         Returns True if the user has clicked the cancel button, otherwise False.
         """
         return self.progress.wasCanceled()
+
 
     def close(self):
         """
@@ -132,18 +140,48 @@ class GenSimPlotUtilities:
     """
 
     @staticmethod
-    def showErrorMessage(msg):
+    def showErrorMessage(msg, progressDlg = None):
         """
         This method displays an error message dialog box with the specified message.
 
         Parameters:
             msg (str): The error message
+            progressDlg (GProgressDialog): The progress dialog
         """
         msgBox = QtWidgets.QMessageBox()
         msgBox.setIcon(QtWidgets.QMessageBox.Critical)
         msgBox.setText(msg)
         msgBox.setWindowTitle("Error")
         msgBox.exec_()
+        if progressDlg != None:
+            progressDlg.close()
+
+
+    @staticmethod
+    def raiseException(msg, progressDlg):
+        """
+        Raises exception and closes the progress dialog.
+
+        Parameters:
+            msg (str): The exception message
+            progressDlg (GProgressDialog): The progress dialog
+        """
+        GenSimPlotUtilities.showErrorMessage(msg, progressDlg)
+        raise Exception(msg)
+
+
+    @staticmethod
+    def raiseValueError(msg, progressDlg):
+        """
+        Raises value exception and closes the progress dialog.
+
+        Parameters:
+            msg (str): The exception message
+            progressDlg (GProgressDialog): The progress dialog
+        """
+        GenSimPlotUtilities.showErrorMessage(msg, progressDlg)
+        raise ValueError(msg)
+
 
     @staticmethod
     def browseInputPolygonShp(parent, tbInputShpFN, cmbFields):
@@ -196,6 +234,7 @@ class GenSimPlotUtilities:
             else:
                 tbInputShpFN.setText("")
 
+    
     @staticmethod
     def browseInputPointShp(parent, tbInputShpFN):
         """
@@ -220,6 +259,7 @@ class GenSimPlotUtilities:
                 shpName = None
             tbInputShpFN.setText(shpName)
 
+
     @staticmethod
     def OnBrowseOutputShp(parent, tbOutputShpFN):
         """
@@ -236,6 +276,7 @@ class GenSimPlotUtilities:
         )
         if shpName:
             tbOutputShpFN.setText(shpName)
+
 
     @staticmethod
     def browseInputRaster(parent, tbInputRasterFN):
@@ -264,6 +305,7 @@ class GenSimPlotUtilities:
                 )
                 tbInputRasterFN.setText("")
 
+
     @staticmethod
     def startProgress(progressDlg: GProgressDialog, label: str, maximum: int):
         """
@@ -278,7 +320,8 @@ class GenSimPlotUtilities:
         """
         if progressDlg != None:
             progressDlg.restart(label, maximum)
-
+    
+    
     @staticmethod
     def incrementProgress(progressDlg: GProgressDialog):
         """
@@ -291,6 +334,7 @@ class GenSimPlotUtilities:
         """
         if progressDlg != None:
             progressDlg.increment()
+
 
     @staticmethod
     def setProgressMaximum(progressDlg: GProgressDialog, maximum: int):
@@ -306,6 +350,7 @@ class GenSimPlotUtilities:
         if progressDlg != None:
             progressDlg.setMaximum(maximum)
 
+
     @staticmethod
     def setProgressLabel(progressDlg: GProgressDialog, label: str):
         """
@@ -319,5 +364,3 @@ class GenSimPlotUtilities:
         """
         if progressDlg != None:
             progressDlg.setLabel(label)
-
-

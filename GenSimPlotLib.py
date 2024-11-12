@@ -40,7 +40,7 @@ class PolygonPlot:
         - createPlot(self, polygon: QgsGeometry): Initializes the plot based on the input polygon geometry.
         - createGeometry(self): Defines the geometry of the simulation plot.
         - clone(self): Creates a copy of the current plot instance.
-        - reshape(self, perc: float) Adjusts the shape of the plot by a specified percentage.
+        - resize(self, perc: float) Adjusts the size of the plot by a specified percentage.
 
     Attributes:
         sideRatioMax (float):        The maximum allowable ratio between the long and short sides of the bounding rectangle.
@@ -316,12 +316,12 @@ class PolygonPlot:
                 self.a = a
                 self.b = b
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         """
-        Reshapes the simulation plot by a specified percentage.
+        Resizes the simulation plot by a specified percentage.
 
         Parameters:
-            perc (float): The percentage by which to reshape the simulation plot.
+            perc (float): The percentage by which to resize the simulation plot.
 
         Returns:
             A new instance of the simulation plot with the adjusted geometry.
@@ -333,18 +333,18 @@ class PolygonPlot:
         plot.geom.rotate(plot.alpha, plot.translatedPosition)
         return plot
 
-    def randomReshape(self, maxReshapePerc: float):
+    def randomResize(self, maxResizePerc: float):
         """
-        Randomly reshapes the simulation plot by a specified maximum percentage.
+        Randomly resizes the simulation plot by a specified maximum percentage.
 
         Parameters:
-            maxReshapePerc (float): The maximum percentage variation to apply when randomly reshaping the plot.
+            maxResizePerc (float): The maximum percentage variation to apply when randomly resizing the plot.
 
         Returns:
             A new instance of the simulation plot with randomly adjusted geometry.
         """
-        perc = maxReshapePerc * (2.0 * random.random() - 1.0)
-        return self.reshape(perc)
+        perc = maxResizePerc * (2.0 * random.random() - 1.0)
+        return self.resize(perc)
 
     def meanXY(self, polygon: QgsGeometry):
         """
@@ -398,7 +398,7 @@ class SquareByCentroid(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
 
@@ -427,7 +427,7 @@ class SquareByBBox(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
 
@@ -456,7 +456,7 @@ class SquareByMeanXY(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
 
@@ -485,7 +485,7 @@ class CircleByCentroid(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
     def rotate(self, angle):
@@ -517,7 +517,7 @@ class CircleByBBox(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
     def rotate(self, angle):
@@ -549,7 +549,7 @@ class CircleByMeanXY(PolygonPlot):
         plot.setupFromPlot(self)
         return plot
 
-    def reshape(self, perc: float):
+    def resize(self, perc: float):
         return self.clone()
 
     def rotate(self, angle):
@@ -712,10 +712,10 @@ class EllipseByMeanXY(PolygonPlot):
         return plot
 
 
+
 #############################################################################
 #   PLOT GENERATOR
 #############################################################################
-
 
 class PlotGenerator:
     """
@@ -731,7 +731,7 @@ class PlotGenerator:
         percTranslate (float):  Defines the maximum percentage for random translations in the x and y directions.
         maxAlpha (float):       Sets the maximum allowable rotation angle, in degrees, for random plot rotations.
         sideRatioMax (float):   Limits the maximum ratio between the long and short sides of a rectangular plot.
-        maxReshapePerc (float): Determines the maximum percentage by which a plot's shape can be altered.
+        maxResizePerc (float):  Determines the maximum percentage by which a plot's size can be altered.
     """
 
     def __init__(self):
@@ -746,7 +746,7 @@ class PlotGenerator:
         percTranslate: float = 0.05,
         maxAlpha: float = 5.00,
         sideRatioMax: float = 4.00,
-        maxReshapePerc: float = 0.10,
+        maxResizePerc: float = 0.10,
     ):
         """
         Configures the parameters for the simulation plot generation process.
@@ -763,14 +763,14 @@ class PlotGenerator:
                                     variation. Default is 5.0 degrees.
             sideRatioMax (float):   The maximum allowable ratio between the longer and shorter sides of a rectangular plot,
                                     which constrains plot shape. Default is 4.0.
-            maxReshapePerc (float): The maximum percentage by which the plot shape can be altered for reshaping, aiding
+            maxResizePerc (float):  The maximum percentage by which the plot size can be altered for reshaping, aiding
                                     flexibility in adapting plot geometry to source data. Default is 0.10.
         """
         self.randomIterations = randomIterations
         self.percTranslate = percTranslate
         self.maxAlpha = maxAlpha
         self.sideRatioMax = sideRatioMax
-        self.maxReshapePerc = maxReshapePerc
+        self.maxResizePerc = maxResizePerc
 
     def createSPlotFields(self, idField: QgsField):
         """
@@ -903,25 +903,25 @@ class PlotGenerator:
                 splot = nplot
         return (splot, sarea)
 
-    def createReshapedSPlot(self, polygon: QgsGeometry, plotFactory):
+    def createResizedSPlot(self, polygon: QgsGeometry, plotFactory):
         """
-        Generates a reshaped simulation plot by applying random shape adjustments to maximize overlap with an input polygon.
+        Generates a resized simulation plot by applying random size adjustments to maximize overlap with an input polygon.
 
         This function initializes a simulation plot based on the provided polygon geometry and iteratively applies random
-        reshaping transformations. After each reshaping, the overlap area between the reshaped plot and the input polygon
+        reshaping transformations. After each reshaping, the overlap area between the resized plot and the input polygon
         is calculated, with the plot configuration that yields the maximum overlap being retained as the final output.
 
         Parameters:
             polygon (QgsGeometry): The input polygon geometry used as a reference for generating and optimizing the simulation plot.
-            plotFactory:           An instance of a simulation plot class providing the 'randomReshape' method for performing shape transformations.
+            plotFactory:           An instance of a simulation plot class providing the 'randomResize' method for performing resize transformation.
 
         Returns:
-            SimulationPlot: The reshaped simulation plot with the highest achieved overlap area relative to the input polygon.
+            SimulationPlot: The resized simulation plot with the highest achieved overlap area relative to the input polygon.
         """
         splot = plotFactory.createPlot(polygon)
         sarea = polygon.intersection(splot.geom).area()
         for i in range(self.randomIterations):
-            nplot = splot.randomReshape(self.maxReshapePerc)
+            nplot = splot.randomResize(self.maxResizePerc)
             narea = polygon.intersection(nplot.geom).area()
             if sarea < narea:
                 sarea = narea
@@ -938,7 +938,7 @@ class PlotGenerator:
 
         Parameters:
             polygon (QgsGeometry): The input polygon geometry used as a reference for generating and optimizing the simulation plot.
-            plotFactory:           An instance of a simulation plot class that provides 'createPlot', 'randomReshape',
+            plotFactory:           An instance of a simulation plot class that provides 'createPlot', 'randomResize',
                                    'randomTranslate', and 'randomRotate' methods to perform the transformations.
 
         Returns:
@@ -947,7 +947,7 @@ class PlotGenerator:
         splot = plotFactory.createPlot(polygon)
         sarea = polygon.intersection(splot.geom).area()
         for i in range(self.randomIterations):
-            nplot = splot.randomReshape(self.maxReshapePerc)
+            nplot = splot.randomResize(self.maxResizePerc)
             nplot = nplot.randomTranslate(self.percTranslate)
             nplot = nplot.randomRotate(self.maxAlpha)
             narea = polygon.intersection(nplot.geom).area()
@@ -968,7 +968,7 @@ class PlotGenerator:
         Parameters:
             polygon (QgsGeometry): The input polygon geometry used as a reference for generating and optimizing the simulation plot.
             plotFactory:           An instance of a simulation plot class that provides methods such as 'createPlot',
-                                   'randomReshape', 'randomTranslate', and 'randomRotate' for performing transformations.
+                                   'randomResize', 'randomTranslate', and 'randomRotate' for performing transformations.
 
         Returns:
             The optimized simulation plot that achieves the maximum overlap area with the input polygon.
@@ -1076,7 +1076,7 @@ class PlotGenerator:
         random.seed()
         inputLayer = QgsVectorLayer(inputFN, "input polygons", "ogr")
         if inputLayer.geometryType() != Qgis.GeometryType.Polygon:
-            raise ValueError("Geometry must be POLYGON.")
+            GenSimPlotUtilities.raiseValueError(f"Geometry must be POLYGON ({inputFN}).", progressDlg)
         inputIDField = inputLayer.fields().field(idFieldName)
         outputFields = self.createSPlotFields(QgsField(inputIDField))
         outputLayer = self.createSPlotShapeFile(
@@ -1105,7 +1105,7 @@ class PlotGenerator:
             )
             outputFeature.setGeometry(splot.geom)
             if not outputLayer.addFeature(outputFeature):
-                raise Exception("Cannnot save feature.")
+                GenSimPlotUtilities.raiseException("Cannnot save feature.", progressDlg)
             GenSimPlotUtilities.incrementProgress(progressDlg)
 
 
@@ -1200,7 +1200,7 @@ class PlotGenerator:
         )
 
     
-    def generateReshapedPlots(
+    def generateResizedPlots(
         self, 
         inputFN: str, 
         idFieldName: str, 
@@ -1209,44 +1209,42 @@ class PlotGenerator:
         progressDlg: GProgressDialog,
     ):
         """
-        Generates randomly reshaped simulation plots for each polygon feature in the input vector file and saves them to an output vector file.
+        Generates simulation plots with randomized size adjustments for each polygon feature in the input vector file, saving them to an output file.
 
-        This function reads polygon geometries from an input vector file and applies random size adjustments to create simulation plots with varied shapes.
-        It uses the specified 'plotFactory' instance and the 'createReshapedSPlot' function to perform the random reshaping, then saves each generated plot
-        to the specified output file.
+        This function reads polygon geometries from the specified input vector file, applies random resizing transformations to create simulation 
+        plots with variable dimensions. It uses the given 'plotFactory' instance and the 'createResizedSPlot' method to control the resizing process
+        and save the plots to the specified output file.
 
         Parameters:
-            inputFN (str):     Path to the input vector file containing polygon features.
-            idFieldName (str): Field name representing the polygon ID in the input file.
-            outputFN (str):    Path to the output vector file where rotated simulation plots will be saved.
-            plotFactory (PolygonPlot): An instance of the simulation plot class responsible for generating plot geometries.
-            progressDlg (GProgressDialog): Optional parameter for displaying a progress dialog during the process.
+            inputFN (str): Path to the input vector file containing polygon features.
+            idFieldName (str): Name of the field representing a unique identifier for each polygon in the input file.
+            outputFN (str): Path to the output vector file where the resized simulation plots will be saved.
+            plotFactory (PolygonPlot): An instance of the plot class responsible for generating and resizing plot geometries.
+            progressDlg (GProgressDialog): Instance of a progress dialog to display updates throughout the resizing operation.
 
         Details:
-            - Each polygon feature in the input vector file is processed to generate a simulation plot with a randomized shape
-              transformation, based on the input polygon.
-            - Utilizes 'self.createPlots', a generalized plot-creation method, with 'self.createReshapedSPlot' to apply random
-              reshaping to each plot while preserving the plot area.
-            - The output vector file records attributes that associate each reshaped plot with its original polygon ID, alongside
-              additional plot-related details.
+            - Processes each polygon feature in the input vector file to create a resized simulation plot using random size variations.
+            - Calls 'self.createPlots', a generalized method for plot generation, and 'self.createResizedSPlot' for applying size adjustments 
+              that maintain area constraints and improve spatial alignment within each polygon.
+            - Attributes in the output vector file link each resized plot to its original polygon ID and include additional plot-specific data.
 
         Raises:
-            ValueError: Raised if the input layer geometry is not a polygon or if there is an error saving a plot to the output layer.
+            ValueError: If the input layer's geometry is not a polygon or if there is an error saving a plot to the output layer.
 
         Returns:
-            None: This function directly writes output to the specified file path.
+            None: The function directly writes the resized simulation plots to the specified output file.
 
         Usage:
-            'generateReshapedPlots' is suitable for scenarios where simulation plots with varied shapes are needed to maximize
-            overlap with the original polygon geometry. This function is ideal for analyses that benefit from adaptive plot shapes,
-            enhancing spatial representativeness or coverage across different polygon features.
+            'generateResizedPlots' is suitable for tasks requiring simulation plots with variable sizes for enhanced spatial alignment 
+            and coverage. It is ideal for scenarios where adaptive plot sizes are necessary to improve overlap with source polygons 
+            for detailed spatial analysis.
         """
         self.createPlots(
             inputFN,
             idFieldName,
             outputFN,
             plotFactory,
-            self.createReshapedSPlot,
+            self.createResizedSPlot,
             progressDlg,
         )
 
@@ -1325,7 +1323,7 @@ class PlotGenerator:
         Details:
             - Utilizes 'self.createPlots', a generalized plot-creation method, with 'self.createOptimizedSPlot' to apply iterative
               transformations aimed at maximizing area overlap with the original polygon.
-            - Each plot undergoes randomized adjustments in position, rotation, and shape to achieve optimal alignment
+            - Each plot undergoes randomized adjustments in position, rotation, and size to achieve optimal alignment
               with the input polygons.
 
         Raises:
@@ -1372,7 +1370,7 @@ class PlotGenerator:
             plotFactory (SimulationPlotFactory): An instance of the simulation plot class responsible for generating plot geometries.
             plotPlacement (str): Specifies the placement strategy for the plots. Options include:
                                  - "fixed": Generates plots with a fixed position.
-                                 - "reshaped": Randomly alters plot shape while preserving area.
+                                 - "resized": Randomly alters plot size while preserving area.
                                  - "rotated": Applies random rotations to plot orientation.
                                  - "translated": Applies random translations to plot positions.
                                  - "optimized": Iteratively adjusts placement to maximize plot overlap with the polygon.
@@ -1386,7 +1384,7 @@ class PlotGenerator:
 
         Usage:
             'generatePlots' is suitable for scenarios where multiple spatial configuration options are required, allowing users to
-            select between fixed, translated, rotated, reshaped, and optimized placements based on analysis needs. This function simplifies
+            select between fixed, translated, rotated, resized, and optimized placements based on analysis needs. This function simplifies
             the plot generation process by selecting the appropriate method based on the 'plotPlacement' parameter.
         """
         if plotPlacement == "fixed":
@@ -1395,13 +1393,14 @@ class PlotGenerator:
             self.generateTranslatedPlots(inputFN, idFieldName, outputFN, plotFactory, progressDlg)
         elif plotPlacement == "rotated":
             self.generateRotatedPlots(inputFN, idFieldName, outputFN, plotFactory, progressDlg)
-        elif plotPlacement == "reshaped":
-            self.generateReshapedPlots(inputFN, idFieldName, outputFN, plotFactory, progressDlg)
+        elif plotPlacement == "resized":
+            self.generateResizedPlots(inputFN, idFieldName, outputFN, plotFactory, progressDlg)
         elif plotPlacement == "optimized":
             self.generateOptimizedPlots(inputFN, idFieldName, outputFN, plotFactory, progressDlg)
         else:
-            raise ValueError(
-                "Invalid plot placement option ('{}').".format(plotPlacement)
+            GenSimPlotUtilities.raiseValueError(
+                f"Invalid plot placement option ({plotPlacement}).", 
+                progressDlg,
             )
 
 
@@ -1427,7 +1426,7 @@ class PlotGenerator:
                                  - "mean coordinates": Centers the square at the mean x and y coordinates of the polygon.
             plotPlacement (str): Specifies the placement strategy for the square plots. Options include:
                                  - "fixed": Generates plots with a fixed position.
-                                 - "reshaped": Randomly alters plot shape while preserving area; does not affect square plots.
+                                 - "resized": Randomly alters plot size while preserving area; does not affect square plots.
                                  - "rotated": Applies random rotations to plot orientation.
                                  - "translated": Applies random translations to plot positions.
                                  - "optimized": Iteratively adjusts placement to maximize plot overlap with the polygon.
@@ -1458,7 +1457,10 @@ class PlotGenerator:
                 inputFN, idFieldName, outputFN, SquareByMeanXY(), plotPlacement, progressDlg
             )
         else:
-            raise ValueError("Invalid plot position option.")
+            GenSimPlotUtilities.raiseValueError(
+                f"Invalid plot position option ({plotPosition}).",
+                progressDlg,
+            )
 
 
     def generateCirclePlots(
@@ -1482,7 +1484,7 @@ class PlotGenerator:
                                  - "mean coordinates": Centers the circle at the mean x and y coordinates of the polygon.
             plotPlacement (str): Specifies the placement strategy for the circle plots, offering additional spatial adjustments:
                                  - "fixed": Generates plots with a fixed position.
-                                 - "reshaped": Randomly alters plot shape while preserving area; does not affect circular plots.
+                                 - "resized": Randomly alters plot size while preserving area; does not affect circular plots.
                                  - "rotated": Applies random rotations to plot orientation.
                                  - "translated": Applies random translations to plot positions.
                                  - "optimized": Iteratively adjusts placement to maximize plot overlap with the polygon.
@@ -1512,7 +1514,10 @@ class PlotGenerator:
                 inputFN, idFieldName, outputFN, CircleByMeanXY(), plotPlacement, progressDlg
             )
         else:
-            raise ValueError("Invalid plot position option.")
+            GenSimPlotUtilities.raiseValueError(
+                f"Invalid plot position option ({plotPosition}).",
+                progressDlg,
+            )
 
 
     def generateRectanglePlots(
@@ -1535,7 +1540,7 @@ class PlotGenerator:
                                  - "mean coordinates": Centers the rectangle at the mean x and y coordinates of the polygon.
             plotPlacement (str): Specifies the placement strategy for the rectangle plots, providing spatial flexibility:
                                  - "fixed": Generates plots with a fixed position within the polygon.
-                                 - "reshaped": Randomly alters plot shape while preserving area.
+                                 - "resized": Randomly alters plot size while preserving area.
                                  - "rotated": Applies random rotations to adjust plot orientation.
                                  - "translated": Applies random translations to adjust plot positioning.
                                  - "optimized": Iteratively optimizes placement to maximize plot overlap with the polygon.
@@ -1564,7 +1569,10 @@ class PlotGenerator:
                 inputFN, idFieldName, outputFN, RectangleByMeanXY(), plotPlacement, progressDlg
             )
         else:
-            raise ValueError("Invalid plot position option.")
+            GenSimPlotUtilities.raiseValueError(
+                f"Invalid plot position option ({plotPosition}).",
+                progressDlg,
+            )
 
 
     def generateEllipsePlots(
@@ -1575,7 +1583,7 @@ class PlotGenerator:
         plot positioning and placement options, and saves them to an output vector file.
 
         This function reads polygons from the input vector file, generates elliptical plots according to the selected
-        position criteria (bounding box, centroid, or mean coordinates), and applies the specified placement (fixed, reshaped, rotated,
+        position criteria (bounding box, centroid, or mean coordinates), and applies the specified placement (fixed, resized, rotated,
         translated, or optimized). Each generated plot is saved to an output file with attributes that identify the original polygon
         and store relevant simulation details.
 
@@ -1589,7 +1597,7 @@ class PlotGenerator:
                                  - "mean coordinates": Positions the ellipse at the mean x and y coordinates of the polygon.
             plotPlacement (str): Specifies how the plot is placed within the polygon:
                                  - "fixed": Generates plots with a fixed position within the polygon.
-                                 - "reshaped": Randomly alters plot shape while preserving area.
+                                 - "resized": Randomly alters plot size while preserving area.
                                  - "rotated": Applies random rotations to adjust plot orientation.
                                  - "translated": Applies random translations to adjust plot positioning.
                                  - "optimized": Iteratively optimizes placement to maximize plot overlap with the polygon.
@@ -1617,7 +1625,10 @@ class PlotGenerator:
                 inputFN, idFieldName, outputFN, EllipseByMeanXY(), plotPlacement, progressDlg
             )
         else:
-            raise ValueError("Invalid plot position option.")
+            GenSimPlotUtilities.raiseValueError(
+                f"Invalid plot position option ({plotPosition}).",
+                progressDlg,
+            )
 
 
     def generateBestPlots(
@@ -1661,10 +1672,10 @@ class PlotGenerator:
         )
 
 
+
 #############################################################################
 #   POINTS ON SIMULATION PLOTS
 #############################################################################
-
 
 class PointsGenerator:
     """
@@ -1883,7 +1894,7 @@ class PointsGenerator:
         """
         inputLayer = QgsVectorLayer(inputFN, "forest stands", "ogr")
         if inputLayer.geometryType() != Qgis.GeometryType.Polygon:
-            raise ValueError("Geometry must be POLYGON.")
+            GenSimPlotUtilities.raiseValueError(f"Geometry must be POLYGON ({inputFN}).", progressDlg)
         inputIDField = inputLayer.fields().field(idFieldName)
         outputFields = self.createSPointsFields(QgsField(inputIDField))
         outputLayer = self.createSPointsShapeFile(
@@ -1991,10 +2002,10 @@ class SimulationPlotVariables(PointsGenerator):
         dataLayer = QgsRasterLayer(rasterFN, "data")
         rdata = dataLayer.dataProvider()
         if not QgsRasterLayer.isValidRasterFileName(rasterFN):
-            raise ValueError("The input raster is invalid.")
+            GenSimPlotUtilities.raiseValueError(f"The input raster is invalid ({rasterFN}).", progressDlg)
         spLayer = QgsVectorLayer(shpFN, "plots", "ogr")
         if spLayer.geometryType() != Qgis.GeometryType.Polygon:
-            raise ValueError("Geometry must be POLYGON.")
+            GenSimPlotUtilities.raiseValueError("Geometry must be POLYGON ({shpFN}).", progressDlg)
         if spLayer.fields().indexFromName(shpValueFieldName) < 0:
             # add data field to plots layer
             if self.maxValueFieldNameLength < len(shpValueFieldName):
@@ -2067,10 +2078,10 @@ class SimulationPlotVariables(PointsGenerator):
         dataLayer = QgsRasterLayer(rasterFN, "data")
         rdata = dataLayer.dataProvider()
         if not QgsRasterLayer.isValidRasterFileName(rasterFN):
-            raise ValueError("The input raster is invalid.")
+            GenSimPlotUtilities.raiseValueError(f"The input raster is invalid ({rasterFN}).", progressDlg)
         pointsLayer = QgsVectorLayer(pointsFN, "points", "ogr")
         if pointsLayer.geometryType() != Qgis.GeometryType.Point:
-            raise ValueError("Geometry must be POINT.")
+            GenSimPlotUtilities.raiseValueError(f"Geometry must be POINT ({pointsFN}).", progressDlg)
         if pointsLayer.fields().indexFromName(valueFieldName) < 0:
             # add data field to points layer
             pointsLayer.dataProvider().addAttributes(

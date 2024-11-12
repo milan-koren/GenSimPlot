@@ -30,7 +30,6 @@ class GenSimPlotDialog(QtWidgets.QDialog, FORM_CLASS):
     def __init__(self, parent=None):
         super(GenSimPlotDialog, self).__init__(parent)
         self.setupUi(self)
-        self.setWindowTitle('Generator of Simulation Plots')
         self.btnBox.accepted.connect(self.OnOK)
         self.btnBrowseInputShp.clicked.connect(self.OnBrowseInputShp)
         self.btnBrowseOutputShp.clicked.connect(self.OnBrowseOutputShp)
