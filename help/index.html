@@ -227,11 +227,11 @@
                 from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
                 from GenSimPlotUtilities import GProgressDialog
 
-                # Initialize the progress dialog
+                #Initialize the progress dialog
                 progressDlg = GProgressDialog()
                 progressDlg.show()
 
-                # Define input parameters
+                #Define input parameters
                 workingFolder = "c:\\data\\"
                 inputShp = workingFolder + "forest_stands.shp"
                 polygonID = "id"
@@ -242,26 +242,26 @@
                 demRaster = workingFolder + "dem\\dem"
                 slopeRaster = workingFolder + "dem\\slope"
 
-                # Generate optimized simulation plots
+                #Generate optimized simulation plots
                 plotGen = PlotGenerator()
                 plotGen.generateBestPlots(inputShp, polygonID, plotsShp, progressDlg)
 
-                # Generate a grid of points within the plots
+                #Generate a grid of points within the plots
                 pointsGen = SimulationPlotVariables()
                 pointsGen.generatePoints(plotsShp, polygonID, pointsShp, nPoints, clipPoints, progressDlg)
 
-                # Extract raster values for each point within plots and calculate plot-level statistics
+                #Extract raster values for each point within plots and calculate plot-level statistics
                 rasterStats = SimulationPlotVariables()
-                rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, 'elev', demRaster, progressDlg)
+                rasterStats.valueFromPoints(plotsShp, polygonID, pointsShp, "elev", demRaster, progressDlg)
 
-                # Extract raster values for each plot centroid
+                #Extract raster values for each plot centroid
                 rasterCentroid = SimulationPlotVariables()
-                rasterCentroid.valueFromCentroid(plotsShp, 'slope', slopeRaster, progressDlg)
+                rasterCentroid.valueFromCentroid(plotsShp, "slope", slopeRaster, progressDlg)
 
-                # Close the progress dialog
+                #Close the progress dialog
                 progressDlg.close()
             </code>
-    </pre>
+        </pre>
     </div>
 
 </body>
