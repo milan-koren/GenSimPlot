@@ -33,23 +33,7 @@ valueFromCentroid extracts raster values at each plot's centroid, storing the va
 attribute table.
 """
 
-from GenSimPlotLib import PlotGenerator
-from GenSimPlotLib import SquareByCentroid
-from GenSimPlotLib import SquareByBBox
-from GenSimPlotLib import SquareByMeanXY
-from GenSimPlotLib import CircleByCentroid
-from GenSimPlotLib import CircleByBBox
-from GenSimPlotLib import CircleByMeanXY
-from GenSimPlotLib import RectangleByCentroid
-from GenSimPlotLib import RectangleByBBox
-from GenSimPlotLib import RectangleByMeanXY
-from GenSimPlotLib import EllipseByCentroid
-from GenSimPlotLib import EllipseByBBox
-from GenSimPlotLib import EllipseByMeanXY
-from GenSimPlotLib import EllipseByMeanXY
-from GenSimPlotLib import EllipseByMeanXY
-from GenSimPlotLib import PointsGenerator
-from GenSimPlotLib import SimulationPlotVariables
+from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
 from GenSimPlotUtilities import GProgressDialog
 
 
@@ -399,8 +383,6 @@ def GenerateRectangles(
     workingDir: str, polygonShpFN: str, idFieldName: str, nPoints: int, clipPoints: bool, progressDlg: GProgressDialog
 ):
     plotGen = PlotGenerator()
-    pointsGen = PointsGenerator()
-    plotGen = PlotGenerator()
     pointsGen = SimulationPlotVariables()
     print("generating: rectangle, centroid, fixed")
     plotGen.generateRectanglePlots(
@@ -454,53 +436,53 @@ def GenerateRectangles(
         progressDlg,
     )
 
-    print("generating: rectangle, centroid, reshaped")
+    print("generating: rectangle, centroid, resized")
     plotGen.generateRectanglePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "rectangle_cen_rshp.shp",
+        workingDir + "rectangle_cen_rsiz.shp",
         "centroid",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "rectangle_cen_rshp.shp",
+        workingDir + "rectangle_cen_rsiz.shp",
         idFieldName,
-        workingDir + "rectangle_cen_rshp_points.shp",
+        workingDir + "rectangle_cen_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
     )
-    print("generating: rectangle, bounding box, reshaped")
+    print("generating: rectangle, bounding box, resized")
     plotGen.generateRectanglePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "rectangle_bbox_rshp.shp",
+        workingDir + "rectangle_bbox_rsiz.shp",
         "bounding box",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "rectangle_bbox_rshp.shp",
+        workingDir + "rectangle_bbox_rsiz.shp",
         idFieldName,
-        workingDir + "rectangle_bbox_rshp_points.shp",
+        workingDir + "rectangle_bbox_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
     )
-    print("generating: rectangle, mean coordinates, reshaped")
+    print("generating: rectangle, mean coordinates, resized")
     plotGen.generateRectanglePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "rectangle_mxy_rshp.shp",
+        workingDir + "rectangle_mxy_rsiz.shp",
         "mean coordinates",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "rectangle_mxy_rshp.shp",
+        workingDir + "rectangle_mxy_rsiz.shp",
         idFieldName,
-        workingDir + "rectangle_mxy_rshp_points.shp",
+        workingDir + "rectangle_mxy_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
@@ -667,8 +649,6 @@ def GenerateEllipses(
     workingDir: str, polygonShpFN: str, idFieldName: str, nPoints: int, clipPoints: bool, progressDlg: GProgressDialog
 ):
     plotGen = PlotGenerator()
-    pointsGen = PointsGenerator()
-    plotGen = PlotGenerator()
     pointsGen = SimulationPlotVariables()
     print("generating: ellipse, centroid, fixed")
     plotGen.generateEllipsePlots(
@@ -722,53 +702,53 @@ def GenerateEllipses(
         progressDlg,
     )
 
-    print("generating: ellipse, centroid, reshaped")
+    print("generating: ellipse, centroid, resized")
     plotGen.generateEllipsePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "ellipse_cen_rshp.shp",
+        workingDir + "ellipse_cen_rsiz.shp",
         "centroid",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "ellipse_cen_rshp.shp",
+        workingDir + "ellipse_cen_rsiz.shp",
         idFieldName,
-        workingDir + "ellipse_cen_rshp_points.shp",
+        workingDir + "ellipse_cen_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
     )
-    print("generating: ellipse, bounding box, reshaped")
+    print("generating: ellipse, bounding box, resized")
     plotGen.generateEllipsePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "ellipse_bbox_rshp.shp",
+        workingDir + "ellipse_bbox_rsiz.shp",
         "bounding box",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "ellipse_bbox_rshp.shp",
+        workingDir + "ellipse_bbox_rsiz.shp",
         idFieldName,
-        workingDir + "ellipse_bbox_rshp_points.shp",
+        workingDir + "ellipse_bbox_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
     )
-    print("generating: ellipse, mean coordinates, reshaped")
+    print("generating: ellipse, mean coordinates, resized")
     plotGen.generateEllipsePlots(
         workingDir + polygonShpFN,
         idFieldName,
-        workingDir + "ellipse_mxy_rshp.shp",
+        workingDir + "ellipse_mxy_rsiz.shp",
         "mean coordinates",
-        "reshaped",
+        "resized",
         progressDlg,
     )
     pointsGen.generatePoints(
-        workingDir + "ellipse_mxy_rshp.shp",
+        workingDir + "ellipse_mxy_rsiz.shp",
         idFieldName,
-        workingDir + "ellipse_mxy_rshp_points.shp",
+        workingDir + "ellipse_mxy_rsiz_points.shp",
         nPoints,
         clipPoints,
         progressDlg,
@@ -940,8 +920,6 @@ def GenerateBestPlots(
     progressDlg: GProgressDialog,
 ):
     plotGen = PlotGenerator()
-    pointsGen = PointsGenerator()
-    plotGen = PlotGenerator()
     pointsGen = SimulationPlotVariables()
     print("generating: best")
     plotGen.generateBestPlots(
@@ -964,30 +942,38 @@ def GenerateBestPlots(
 progressDlg = GProgressDialog()
 progressDlg.show()
 
-# Set configuration variables for batch testing.
-workingDir = "C:\\data\\"
-fstandFN = "forest_stands.shp"
-fstandID = "id"
-nPoints = 5
-clipPoints = True
+try:
+    # Set configuration variables for batch testing.
+    workingDir = "C:\\data\\"
+    fstandFN = "forest_stands.shp"
+    fstandID = "id"
+    nPoints = 5
+    clipPoints = True
 
-# Generate simulation plots and points for each plot type.
-GenerateSquares(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
-GenerateCircles(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
-GenerateRectangles(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
-GenerateEllipses(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
-GenerateBestPlots(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
+    # Generate simulation plots and points for each plot type.
+    GenerateSquares(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
+    GenerateCircles(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
+    GenerateRectangles(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
+    GenerateEllipses(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
+    GenerateBestPlots(workingDir, fstandFN, fstandID, nPoints, clipPoints, progressDlg)
 
-# Set configuration variables for raster extraction.
-demFN = "dem\\dem"
-slopeFN = "dem\\slope_perc"
-plotShpFN = "best_plot.shp" # created by GenerateBestPlots
-pointsShpFN = "best_plot_points.shp" # created by GenerateBestPlots
+    # Set configuration variables for raster extraction.
+    demFN = "dem\\dem"
+    slopeFN = "dem\\slope_perc"
+    plotShpFN = "best_plot.shp" # created by GenerateBestPlots
+    pointsShpFN = "best_plot_points.shp" # created by GenerateBestPlots
 
-# Extract elevation and slope values for each point in the simulation plot.
-points = SimulationPlotVariables()
-points.valueFromPoints(workingDir + fstandFN, fstandID, workingDir + pointsShpFN, "elev", workingDir + demFN, progressDlg)
-points.valueFromPoints(workingDir + fstandFN, fstandID, workingDir + pointsShpFN, "slope", workingDir + slopeFN, progressDlg)
-points.valueFromCentroid(workingDir + plotShpFN, "slope", workingDir + slopeFN, progressDlg)
+    # Extract elevation and slope values for each point in the simulation plot.
+    points = SimulationPlotVariables()
+    points.valueFromPoints(workingDir + fstandFN, fstandID, workingDir + pointsShpFN, "elev", workingDir + demFN, progressDlg)
+    points.valueFromPoints(workingDir + fstandFN, fstandID, workingDir + pointsShpFN, "slope", workingDir + slopeFN, progressDlg)
+    points.valueFromCentroid(workingDir + plotShpFN, "slope", workingDir + slopeFN, progressDlg)
 
-progressDlg.close()
+except Exception as e:
+    print(e)
+
+else:
+    print("Testing completed.")
+
+finally:
+    progressDlg.close()
