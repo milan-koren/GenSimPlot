@@ -54,7 +54,7 @@
 <h2>Installation</h2>
 <div>
     <p>
-        GenSimPlot can be installed from the QGIS Plugin Repository or by downloading the source code from the <a href="https://github.com/milan-koren/GenSimPlot" target="_blank">GitHub repository</a>.
+        GenSimPlot can be installed from the <a href="https://plugins.qgis.org/plugins/gensimplot/" target="_blank">QGIS Plugin Repository</a> or by downloading the source code from the <a href="https://github.com/milan-koren/GenSimPlot" target="_blank">GitHub repository</a>.
     </p>
     <p>The plugin will be available in the QGIS Vector menu after installation.</p>
     <img src="help/qgis_vector_menu.png" width="720" />
