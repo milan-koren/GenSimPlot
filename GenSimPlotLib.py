@@ -12,9 +12,11 @@ The implementation of various classes for creating different types of simulation
 such as squares, circles, rectangles, and ellipses based on different criteria.
 """
 
-from cmath import rect
+import os
+import json
 import math
 import random
+from cmath import rect
 from qgis.core import *
 from PyQt5.QtCore import QVariant
 from osgeo import gdal
@@ -180,13 +182,14 @@ class PolygonPlot:
         Calculates the major and minor axis of the ellipse simulation plot of equal area of polygon.
         """
         d = self.polygonPerimeter * self.polygonPerimeter - 16 * self.polygonArea
-        if 0 < d:
+        if 0.0 < d:
             d = math.sqrt(d)
+            s = (self.polygonPerimeter + d) / (self.polygonPerimeter - d)
         else:
-            d = 0
-        r = (self.polygonPerimeter + d) / (self.polygonPerimeter - d)
-        a = math.sqrt(r * self.polygonArea / math.pi)
-        b = a / r
+            d = 0.0
+            s = 1.0
+        a = math.sqrt(s * self.polygonArea / math.pi)
+        b = a / s
         if self.sideRatioMax is not None:
             if self.sideRatioMax < a / b:
                 a = math.sqrt(self.sideRatioMax * self.polygonArea / math.pi)
@@ -727,26 +730,35 @@ class PlotGenerator:
     and reshaping - to maximize overlap with source polygons.
 
     Attributes:
-        randomIterations (int): Specifies the number of random iterations for each simulation plot generation.
-        percTranslate (float):  Defines the maximum percentage for random translations in the x and y directions.
-        maxAlpha (float):       Sets the maximum allowable rotation angle, in degrees, for random plot rotations.
-        sideRatioMax (float):   Limits the maximum ratio between the long and short sides of a rectangular plot.
-        maxResizePerc (float):  Determines the maximum percentage by which a plot's size can be altered.
+        randomIterations (int): The number of random generation attempts to apply when creating each simulation plot.
+                                Higher values can improve accuracy but may increase computation time. Default is 750.
+        percTranslate (float):  The maximum allowable percentage for random translation in both x and y directions
+                                relative to plot size. Default is 0.1.
+        maxAlpha (float):       The maximum rotation angle, in degrees, for random plot rotations to enhance positional
+                                variation. Default is 25 degrees.
+        maxResizePerc (float):  The maximum percentage by which the plot size can be altered for reshaping, aiding
+                                flexibility in adapting plot geometry to source data. Default is 0.15.
+        sideRatioMax (float):   The maximum allowable ratio between the longer and shorter sides of a rectangular plot,
+                                which constrains plot shape. Default is 4.
     """
 
+   
     def __init__(self):
         """
         Initializes the PlotGenerator class with default values for the simulation plot generation parameters.
         """
+        random.seed()
         self.setup()
+        self.readHyperparameters("gensimplot.cnf")
+
 
     def setup(
         self,
-        randomIterations: int = 250,
-        percTranslate: float = 0.05,
-        maxAlpha: float = 5.00,
+        randomIterations: int = 750,
+        percTranslate: float = 0.10,
+        maxAlpha: float = 25.00,
+        maxResizePerc: float = 0.15,
         sideRatioMax: float = 4.00,
-        maxResizePerc: float = 0.10,
     ):
         """
         Configures the parameters for the simulation plot generation process.
@@ -755,16 +767,11 @@ class PlotGenerator:
         the number of random iterations, maximum translation, rotation angle, aspect ratio limits, and reshaping percentage.
 
         Parameters:
-            randomIterations (int): The number of random generation attempts to apply when creating each simulation plot.
-                                    Higher values can improve accuracy but may increase computation time. Default is 250.
-            percTranslate (float):  The maximum allowable percentage for random translation in both x and y directions
-                                    relative to plot size. Default is 0.05.
-            maxAlpha (float):       The maximum rotation angle, in degrees, for random plot rotations to enhance positional
-                                    variation. Default is 5.0 degrees.
-            sideRatioMax (float):   The maximum allowable ratio between the longer and shorter sides of a rectangular plot,
-                                    which constrains plot shape. Default is 4.0.
-            maxResizePerc (float):  The maximum percentage by which the plot size can be altered for reshaping, aiding
-                                    flexibility in adapting plot geometry to source data. Default is 0.10.
+            randomIterations (int): Specifies the number of random iterations for each simulation plot generation. 
+            percTranslate (float):  Defines the maximum percentage for random translations in the x and y directions.
+            maxAlpha (float):       Sets the maximum allowable rotation angle, in degrees, for random plot rotations. 
+            maxResizePerc (float):  Determines the maximum percentage by which a plot's size can be altered. 
+            sideRatioMax (float):   Limits the maximum ratio between the long and short sides of a rectangular plot. 
         """
         self.randomIterations = randomIterations
         self.percTranslate = percTranslate
@@ -772,6 +779,48 @@ class PlotGenerator:
         self.sideRatioMax = sideRatioMax
         self.maxResizePerc = maxResizePerc
 
+
+    def saveHyperparameters(self, configFN: str):
+        """
+        Saves the current hyperparameters to a JSON file.
+
+        Parameters:
+            configFN (str): The path to the JSON file where hyperparameters will be saved.
+        """
+        configPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), configFN)
+        data = {
+            "randomIterations": self.randomIterations,
+            "percTranslate": self.percTranslate,
+            "maxAlpha": self.maxAlpha,
+            "maxResizePerc": self.maxResizePerc,
+            "sideRatioMax": self.sideRatioMax
+        }
+        with open(configPath, "w") as f:
+            json.dump(data, f, indent=3)
+
+    
+    def readHyperparameters(self, configFN: str):
+        """
+        Reads hyperparameters from a JSON file and updates the class attributes accordingly.
+
+        Parameters:
+            configFN (str): The path to the JSON file where hyperparameters will be read.
+        """
+        configPath = os.path.join(os.path.dirname(os.path.abspath(__file__)), configFN)
+
+        if not os.path.exists(configPath):
+            return
+            
+        with open(configPath, "r") as f:
+            data = json.load(f)
+        
+        self.randomIterations = data.get("randomIterations", self.randomIterations)
+        self.percTranslate = data.get("percTranslate", self.percTranslate)
+        self.maxAlpha = data.get("maxAlpha", self.maxAlpha)
+        self.maxResizePerc = data.get("maxResizePerc", self.maxResizePerc)
+        self.sideRatioMax = data.get("sideRatioMax", self.sideRatioMax)
+        
+        
     def createSPlotFields(self, idField: QgsField):
         """
         Generates a 'QgsFields' object containing fields for simulation plot attributes.
@@ -795,6 +844,7 @@ class PlotGenerator:
         outputFields.append(QgsField("ishp", QVariant.Double, "double", 6, 2))
         return outputFields
 
+    
     def createSPlotShapeFile(self, outputFN: str, outputFields: QgsFields, crs):
         """
         Creates a new ESRI Shapefile for storing simulation plot geometries.
@@ -826,7 +876,8 @@ class PlotGenerator:
             None,
             None,
         )
-
+      
+    
     def createSPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates a simulation plot using the geometry of an input polygon.
@@ -849,6 +900,7 @@ class PlotGenerator:
         sarea = polygon.intersection(splot.geom).area()
         return (splot, sarea)
 
+    
     def createTranslatedPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates a randomly translated simulation plot to maximize overlap with an input polygon.
@@ -876,6 +928,7 @@ class PlotGenerator:
                 splot = nplot
         return (splot, sarea)
 
+    
     def createRotatedSPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates a randomly rotated simulation plot to maximize overlap with an input polygon.
@@ -903,6 +956,7 @@ class PlotGenerator:
                 splot = nplot
         return (splot, sarea)
 
+
     def createResizedSPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates a resized simulation plot by applying random size adjustments to maximize overlap with an input polygon.
@@ -928,6 +982,7 @@ class PlotGenerator:
                 splot = nplot
         return (splot, sarea)
 
+    
     def createOptimizedSPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates an optimized simulation plot by applying random transformations to maximize overlap with an input polygon.
@@ -956,6 +1011,7 @@ class PlotGenerator:
                 splot = nplot
         return (splot, sarea)
 
+    
     def createBestSPlot(self, polygon: QgsGeometry, plotFactory):
         """
         Generates the most optimal simulation plot that maximizes overlap with the input polygon.
@@ -1024,6 +1080,7 @@ class PlotGenerator:
 
         return (bplot, barea)
 
+    
     def createPlots(
         self,
         inputFN: str,
@@ -1073,19 +1130,22 @@ class PlotGenerator:
             This function is ideal for creating detailed simulation plots for each polygon in the input data, storing all relevant
             geometry and metrics in a new output file.
         """
-        random.seed()
+
         inputLayer = QgsVectorLayer(inputFN, "input polygons", "ogr")
         if inputLayer.geometryType() != Qgis.GeometryType.Polygon:
             GenSimPlotUtilities.raiseValueError(f"Geometry must be POLYGON ({inputFN}).", progressDlg)
         inputIDField = inputLayer.fields().field(idFieldName)
+        
         outputFields = self.createSPlotFields(QgsField(inputIDField))
         outputLayer = self.createSPlotShapeFile(
             outputFN, outputFields, inputLayer.crs()
         )
+        
         n = inputLayer.featureCount()
         GenSimPlotUtilities.startProgress(
             progressDlg, f"Generating simulation plots to {outputFN} ...", n
         )
+
         for fid in range(0, n):
             inputFeature = inputLayer.getFeature(fid)
             polygon = inputFeature.geometry().asGeometryCollection()[0]
@@ -1107,6 +1167,8 @@ class PlotGenerator:
             if not outputLayer.addFeature(outputFeature):
                 GenSimPlotUtilities.raiseException("Cannnot save feature.", progressDlg)
             GenSimPlotUtilities.incrementProgress(progressDlg)
+
+        del(outputLayer)
 
 
     def generateFixedPlots(

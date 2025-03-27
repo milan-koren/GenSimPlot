@@ -1,0 +1,7 @@
+{
+   "randomIterations": 250,
+   "percTranslate": 0.1,
+   "maxAlpha": 25.0,
+   "maxResizePerc": 0.15,
+   "sideRatioMax": 4.0
+}
