@@ -2,13 +2,14 @@
 """
 Package:   GenSimPlot
 File:      GenSimPlotUtilities.py
-Version:   2.1
+Version:   2.2
 Author:    Milan Koren
 Year:      2024
 URL:       https://github.com/milan-koren/GenSimPlot
 License:   EUPL v1.2 (European Union Public License), https://eupl.eu/
 """
 
+import os
 import os.path
 
 from qgis.PyQt import QtWidgets

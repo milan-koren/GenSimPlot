@@ -2,7 +2,7 @@
 """
 Package:   GenSimPlot
 File:      ExtractByPoints_dialog.py
-Version:   2.1
+Version:   2.2
 Author:    Milan Koren
 Year:      2024
 URL:       https://github.com/milan-koren/GenSimPlot

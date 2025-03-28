@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2991981e-aaa4-410b-94b5-9918b21bbd9f}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>tests2.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="help\example_best_plots.png" />
+    <Content Include="help\example_best_points.png" />
+    <Content Include="help\example_square_plots.png" />
+    <Content Include="help\example_square_points.png" />
+    <Content Include="help\form_generate_plots.png" />
+    <Content Include="help\form_generate_points.png" />
+    <Content Include="help\form_raster_by_centroid.png" />
+    <Content Include="help\form_raster_by_points.png" />
+    <Content Include="help\gensimplot.png" />
+    <Content Include="help\index.html" />
+    <Content Include="help\qgis_vector_menu.png" />
+    <Content Include="icon.png" />
+    <Content Include="icon01.png" />
+    <Content Include="icon02.png" />
+    <Content Include="icon03.png" />
+    <Content Include="icon04.png" />
+    <Content Include="metadata.txt" />
+    <Content Include="_backup\.spyproject\config\codestyle.ini" />
+    <Content Include="_backup\.spyproject\config\defaults\defaults-codestyle-0.2.0.ini" />
+    <Content Include="_backup\.spyproject\config\defaults\defaults-encoding-0.2.0.ini" />
+    <Content Include="_backup\.spyproject\config\defaults\defaults-vcs-0.2.0.ini" />
+    <Content Include="_backup\.spyproject\config\defaults\defaults-workspace-0.2.0.ini" />
+    <Content Include="_backup\.spyproject\config\encoding.ini" />
+    <Content Include="_backup\.spyproject\config\vcs.ini" />
+    <Content Include="_backup\.spyproject\config\workspace.ini" />
+    <Content Include="_backup\gensimplot.png" />
+    <Content Include="_backup\TextFile1.txt" />
+    <Content Include="_icons\gsp01.png" />
+    <Content Include="_icons\gsp02.png" />
+    <Content Include="_icons\gsp03.png" />
+    <Content Include="_icons\gsp04.png" />
+    <Content Include="_icons\gsp05.png" />
+    <Content Include="_icons\gsp06.png" />
+    <Content Include="_icons\icon.png" />
+    <Content Include="_icons\icon01.png" />
+    <Content Include="_icons\icon02.png" />
+    <Content Include="_icons\icon03.png" />
+    <Content Include="_icons\icon04.png" />
+    <Content Include="_icons\v1\icon01.png" />
+    <Content Include="_icons\v1\icon02.png" />
+    <Content Include="_icons\v1\icon03.png" />
+    <Content Include="_icons\v2\icon01.png" />
+    <Content Include="_icons\v2\icon02.png" />
+    <Content Include="_icons\v2\icon03.png" />
+    <Content Include="_icons\v3\icon01.png" />
+    <Content Include="_icons\v3\icon02.png" />
+    <Content Include="_icons\v3\icon03.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="example_script.py" />
+    <Compile Include="ExtractByCentroid_dialog.py" />
+    <Compile Include="ExtractByPoints_dialog.py" />
+    <Compile Include="GenPoints_dialog.py" />
+    <Compile Include="GenSimPlot.py" />
+    <Compile Include="GenSimPlotLib.py" />
+    <Compile Include="GenSimPlotUtilities.py" />
+    <Compile Include="GenSimPlot_dialog.py" />
+    <Compile Include="htuning.py" />
+    <Compile Include="htuning_example.py" />
+    <Compile Include="resources.py" />
+    <Compile Include="tests.py" />
+    <Compile Include="tests2.py" />
+    <Compile Include="_backup\gensimplot.py" />
+    <Compile Include="_backup\gensimplot01.py" />
+    <Compile Include="_backup\gensimplot02.py" />
+    <Compile Include="_backup\GenSimPlotLib.py" />
+    <Compile Include="_backup\gen_fig.py" />
+    <Compile Include="_backup\gen_fig2.py" />
+    <Compile Include="_backup\gen_fig3.py" />
+    <Compile Include="_backup\gen_fig3plots.py" />
+    <Compile Include="_backup\test_gensimplot.py" />
+    <Compile Include="_icons\resources.py" />
+    <Compile Include="_icons\v2\resources.py" />
+    <Compile Include="_icons\v3\resources.py" />
+    <Compile Include="__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="help" />
+    <Folder Include="_backup" />
+    <Folder Include="_backup\.spyproject\" />
+    <Folder Include="_backup\.spyproject\config" />
+    <Folder Include="_backup\.spyproject\config\defaults" />
+    <Folder Include="_icons" />
+    <Folder Include="_icons\v1" />
+    <Folder Include="_icons\v2" />
+    <Folder Include="_icons\v3" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

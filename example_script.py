@@ -2,7 +2,7 @@
 """
 Package:   GenSimPlot
 File:      example_script.py
-Version:   2.1
+Version:   2.2
 Author:    Milan Koren
 Year:      2024
 URL:       https://github.com/milan-koren/GenSimPlot
@@ -11,23 +11,25 @@ License:   EUPL v1.2 (European Union Public License), https://eupl.eu/
 GenSimPlot Scripting Example
 
 This script demonstrates the use of GenSimPlot to automate the generation of spatially optimized simulation plots,
-creation of point grids within plots, and extraction of raster values. The example includes generating plots,
-grid of points within plots, and extracting elevation and slope data from raster layers.
+creation of point grids within those plots, and extraction of raster values for environmental variables. 
+
+Example Steps:
+    1. Use PlotGenerator to create optimized plots from the source polygon shapefile.
+    2. Generate a grid of points within each simulation plot.
+    3. Extract raster data for each point, compute plot-level statistics, and store the results.
+    4. Extract additional raster values (e.g., slope) at the centroid of each plot.
+
+The script can be executed in the QGIS Python console or in a script editor configured for QGIS.
 
 Requirements:
 - GenSimPlot plugin and libraries
-- Input shapefile with polygon features (e.g., forest stands)
-- Raster files for environmental data (elevation and slope)
-
-Steps:
-1. Generates optimized simulation plots.
-2. Creates a regular grid of points within each plot.
-3. Extracts raster values at each point within the plots and calculates plot-level statistics.
-4. Extracts raster values at the centroid of each plot.
+- An input shapefile with polygon features (e.g., forest_stands.shp)
+- One or more raster files for environmental data (e.g., a DEM and slope raster)
 """
 
 from GenSimPlotLib import PlotGenerator, PointsGenerator, SimulationPlotVariables
 from GenSimPlotUtilities import GProgressDialog
+
 
 #Initialize the progress dialog
 progressDlg = GProgressDialog()
