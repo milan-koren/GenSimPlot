@@ -32,7 +32,7 @@ from GenSimPlotUtilities import GenSimPlotUtilities, GProgressDialog
 class HTuning:
     """    
     The HTuning class performs hyperparameter tuning for the GenSimPlot package.
-    It defines default ranges for various hyperparameters—number of iterations, translation percentage,
+    It defines default ranges for various hyperparameters number of iterations, translation percentage,
     angle limit, resize percentage, position, placement, and shape of the simulation plots, and provides
     methods to compute and record performance metrics.
     

@@ -394,7 +394,7 @@ class SquareByCentroid(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createSquare()
+        self.createSquare()
 
     def clone(self):
         plot = SquareByCentroid()
@@ -423,7 +423,7 @@ class SquareByBBox(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createSquare()
+       self.createSquare()
 
     def clone(self):
         plot = SquareByBBox()
@@ -452,7 +452,7 @@ class SquareByMeanXY(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createSquare()
+        self.createSquare()
 
     def clone(self):
         plot = SquareByMeanXY()
@@ -481,7 +481,7 @@ class CircleByCentroid(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createCircle()
+        self.createCircle()
 
     def clone(self):
         plot = CircleByCentroid()
@@ -513,7 +513,7 @@ class CircleByBBox(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createCircle()
+        self.createCircle()
 
     def clone(self):
         plot = CircleByBBox()
@@ -545,7 +545,7 @@ class CircleByMeanXY(PolygonPlot):
         return plot
 
     def createGeometry(self):
-        plot.createCircle()
+        self.createCircle()
 
     def clone(self):
         plot = CircleByMeanXY()
@@ -1775,6 +1775,7 @@ class PointsGenerator:
         outputFields.append(QgsField("column", QVariant.Int, "int", 4))
         return outputFields
 
+
     def createSPointsShapeFile(self, outputFN, outputFields, crs):
         """
         Creates an output shapefile to store simulation plot points.
@@ -1808,6 +1809,7 @@ class PointsGenerator:
             None,
             None,
         )
+
 
     def generatePointsX(
         self,
@@ -1866,6 +1868,7 @@ class PointsGenerator:
             y = y - dx
             row += 1
 
+
     def generatePointsY(
         self,
         polygon: QgsMultiPolygon,
@@ -1922,6 +1925,7 @@ class PointsGenerator:
                 y = y - dy
             x = x + dy
             col += 1
+
 
     def generatePoints(
         self,
@@ -2096,6 +2100,7 @@ class SimulationPlotVariables(PointsGenerator):
             GenSimPlotUtilities.incrementProgress(progressDlg)
         spLayer.commitChanges()
 
+
     def valueFromPoints(
         self,
         spFN: str,
@@ -2228,3 +2233,4 @@ class SimulationPlotVariables(PointsGenerator):
                 spLayer.updateFeature(inputSP)
             GenSimPlotUtilities.incrementProgress(progressDlg)
         spLayer.commitChanges()
+        
