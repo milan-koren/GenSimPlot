@@ -754,10 +754,10 @@ class PlotGenerator:
 
     def setup(
         self,
-        randomIterations: int = 750,
-        percTranslate: float = 0.10,
-        maxAlpha: float = 25.00,
-        maxResizePerc: float = 0.15,
+        randomIterations: int = 800,
+        percTranslate: float = 0.15,
+        maxAlpha: float = 15.00,
+        maxResizePerc: float = 0.05,
         sideRatioMax: float = 4.00,
     ):
         """
