@@ -181,21 +181,20 @@ class PolygonPlot:
         """
         Calculates the major and minor axis of the ellipse simulation plot of equal area of polygon.
         """
-        d = self.polygonPerimeter * self.polygonPerimeter - 16 * self.polygonArea
+        ishp = self.polygonPerimeter / math.sqrt(self.polygonArea)
+        d = ishp * ishp - 4.0 * math.pi
         if 0.0 < d:
-            d = math.sqrt(d)
-            s = (self.polygonPerimeter + d) / (self.polygonPerimeter - d)
+            semiMajor = math.sqrt(self.polygonArea) * (ishp + math.sqrt(d)) / (2.0 * math.pi)
+            semiMinor = self.polygonArea / (semiMajor * math.pi)
         else:
-            d = 0.0
-            s = 1.0
-        a = math.sqrt(s * self.polygonArea / math.pi)
-        b = a / s
+            semiMajor = math.sqrt(self.polygonArea / math.pi)
+            semiMinor = semiMajor
         if self.sideRatioMax is not None:
-            if self.sideRatioMax < a / b:
-                a = math.sqrt(self.sideRatioMax * self.polygonArea / math.pi)
-                b = a / self.sideRatioMax
-        self.a = 2 * a
-        self.b = 2 * b
+            if self.sideRatioMax < (semiMajor / semiMinor):
+                semiMajor = math.sqrt(self.sideRatioMax * self.polygonArea / math.pi)
+                semiMinor = semiMajor / self.sideRatioMax
+        self.a = 2 * semiMajor
+        self.b = 2 * semiMinor
 
     def createEllipse(self):
         """
