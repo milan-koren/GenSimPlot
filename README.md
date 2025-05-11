@@ -252,3 +252,68 @@ rasterCentroid.valueFromCentroid(plotsShp, "slope", slopeRaster, progressDlg)
 progressDlg.close()
 </pre>
 </div>
+
+<h2>Hyperparameters Tuning</h2>
+<div>
+    <p>
+        The <b><i>GenSimPlot</i></b> library provides a configurable set of hyperparameters that govern the optimization
+        of simulation plot generation. These parameters can be adjusted to improve the spatial alignment and representativeness
+        of the generated plots:
+    </p>
+    <ul>
+        <li><b><i>randomIterations</i></b>: Specifies the number of random iterations used in generating each simulation plot.</li>
+        <li><b><i>percTranslate</i></b>: Defines the maximum percentage for random translation along the x and y axes.</li>
+        <li><b><i>maxAlpha</i></b>: Sets the maximum allowable rotation angle (in degrees) for random plot orientation.</li>
+        <li><b><i>maxResizePerc</i></b>: Determines the maximum percentage by which the plot size can be randomly adjusted.</li>
+        <li><b><i>sideRatioMax</i></b>: Limits the maximum allowable ratio between the longer and shorter sides of rectangular plots.</li>
+    </ul>
+    <p>
+        Hyperparameter settings can be saved to a configuration file named <b><i>gensimplot.cnf</i></b>, which is formatted in JSON.
+        These parameters can be manually adjusted within the configuration file, providing users with a convenient way to customize the simulation plot generation process.
+        The hyperparameters are automatically loaded during the initialization of the <code><i>PlotGenerator</i></code> class.
+    </p>
+    <p>
+        The <code><i>HTuning</i></code> class implements methods for managing the hyperparameter tuning process.
+    </p>
+    <p>
+        The example below demonstrates how to use the <code><i>HTuning</i></code> class in <b><i>GenSimPlot</i></b>
+        to automate the hyperparameters tuning process. The procedure involves randomly selecting hyperparameter values within specified ranges
+        and evaluating the quality of the resulting simulation plots based on overlap statistics with the input polygons.
+        This process is repeated for a user-defined number of iterations. The resulting metrics, including overlap percentages and execution times,
+        are appended to a designated CSV file for subsequent analysis.
+    </p>
+<pre>
+from htuning import HTuning
+from GenSimPlotUtilities import GProgressDialog
+
+#Initialize the progress dialog
+progressDlg = GProgressDialog()
+progressDlg.show()
+
+ht = HTuning()
+
+ht.run(
+    workingFolder = "C:\\data\\",
+    polygonShpFN = "polygons.shp",
+    idFieldName = "id",
+    outputPlotFNBase = "splots",
+    outputStatisticsFN = "statistics_best.csv",
+    progressDlg = progressDlg,
+    minIterations = 50,
+    maxIterations = 1000,
+    minTranslatePerc = 0.01,
+    maxTranslatePerc = 0.25,
+    minAngleLimit = 1.0,
+    maxAngleLimit = 45.0,
+    minResizePerc = 0.01,
+    maxResizePerc = 0.25,
+    position = "bounding box",
+    placement = "optimized",
+    shape = "best",
+    numberOfTests = 25,
+)
+
+#Close the progress dialog
+progressDlg.close()
+</pre>
+</div>
