@@ -1,5 +1,5 @@
 {
-   "randomIterations": 800,
+   "randomIterations": 200,
    "percTranslate": 0.15,
    "maxAlpha": 15.0,
    "maxResizePerc": 0.05,

@@ -6,7 +6,7 @@
 name=GenSimPlot
 qgisMinimumVersion=3.30
 description=Generator of simulation plots
-version=2.1
+version=2.2
 author=Milan Koren
 email=milan.koren@tuzvo.sk
 
